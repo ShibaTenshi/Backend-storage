@@ -10,7 +10,7 @@
     </parent>
     <groupId>ku.cs</groupId>
     <artifactId>Backend-storage</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>Backend-storage</name>
     <description>Backend-storage</description>
     <properties>
