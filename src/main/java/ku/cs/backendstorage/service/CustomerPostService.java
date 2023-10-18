@@ -23,9 +23,10 @@ public class CustomerPostService {
         if(file.isEmpty()) throw new FileEmptyException();
         if(!file.getContentType().contains("image")) throw new ImageFormatException();
         File directory = new File(Directory.customerParent + customerUsername);
+        FileSystemUtils.deleteRecursively(directory);
         directory.mkdirs();
 
-        String imageName = "profile";
+        String imageName = "profile-" + UUID.randomUUID().toString().replace("-", "");
         Path path = Path.of(directory.getPath() + "/" + imageName + file.getContentType().replace("image/", "."));
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
