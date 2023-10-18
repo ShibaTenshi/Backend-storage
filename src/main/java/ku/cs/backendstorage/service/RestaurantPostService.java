@@ -1,6 +1,7 @@
 package ku.cs.backendstorage.service;
 
 import ku.cs.backendstorage.common.Directory;
+import ku.cs.backendstorage.common.RestaurantImage;
 import ku.cs.backendstorage.exception.FileEmptyException;
 import ku.cs.backendstorage.exception.ImageFormatException;
 import ku.cs.backendstorage.exception.ParamEmptyException;
@@ -17,28 +18,17 @@ import java.util.UUID;
 @Service
 public class RestaurantPostService {
 
-    public String postRestaurantImage(MultipartFile file, String restaurantName) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
-        if(restaurantName.isEmpty()) throw new ParamEmptyException();
-        if(file.isEmpty()) throw new FileEmptyException();
-        if(!file.getContentType().contains("image")) throw new ImageFormatException();
+    public String postRestaurantImage(MultipartFile file, String restaurantName, RestaurantImage image) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
+        if (restaurantName.isEmpty()) throw new ParamEmptyException();
+        if (file.isEmpty()) throw new FileEmptyException();
+        if (!file.getContentType().contains("image")) throw new ImageFormatException();
         File directory = new File(Directory.restaurantParent + restaurantName);
         directory.mkdirs();
 
-        String imageName = String.valueOf(UUID.randomUUID()).replace("-", "");
-        Path path = Path.of(directory.getPath() + "/" + imageName + file.getContentType().replace("image/", "."));
-        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-        return path.toString().substring(8);
-    }
-
-    public String postRestaurantLogoImage(MultipartFile file, String restaurantName) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
-        if(restaurantName.isEmpty()) throw new ParamEmptyException();
-        if(file.isEmpty()) throw new FileEmptyException();
-        if(!file.getContentType().contains("image")) throw new ImageFormatException();
-        File directory = new File(Directory.restaurantParent + restaurantName);
-        directory.mkdirs();
-
-        String imageName = "logo";
+        String imageName;
+        if (image == RestaurantImage.LOGO) imageName = "logo";
+        else if (image == RestaurantImage.MENU) imageName = "menu-" + UUID.randomUUID().toString().replace("-", "");
+        else imageName = "env-" + UUID.randomUUID().toString().replace("-", "");
         Path path = Path.of(directory.getPath() + "/" + imageName + file.getContentType().replace("image/", "."));
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 

@@ -1,5 +1,6 @@
 package ku.cs.backendstorage.controller;
 
+import ku.cs.backendstorage.common.RestaurantImage;
 import ku.cs.backendstorage.exception.FileEmptyException;
 import ku.cs.backendstorage.exception.ImageFormatException;
 import ku.cs.backendstorage.exception.ParamEmptyException;
@@ -18,13 +19,18 @@ public class RestaurantPostController {
     @Autowired
     RestaurantPostService restaurantPostService;
 
-    @PostMapping("/image")
-    public String postImage(@RequestPart MultipartFile file, @RequestParam String restaurantName) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
-        return restaurantPostService.postRestaurantImage(file, restaurantName);
+    @PostMapping("/image/env/{name}")
+    public String postImage(@RequestPart MultipartFile file, @PathVariable String name) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
+        return restaurantPostService.postRestaurantImage(file, name, RestaurantImage.ENV);
     }
 
-    @PostMapping("/image/logo")
-    public String postLogoImage(@RequestPart MultipartFile file, @RequestParam String restaurantName) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
-        return restaurantPostService.postRestaurantLogoImage(file, restaurantName);
+    @PostMapping("/image/logo/{name}")
+    public String postLogoImage(@RequestPart MultipartFile file, @PathVariable String name) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
+        return restaurantPostService.postRestaurantImage(file, name, RestaurantImage.LOGO);
+    }
+
+    @PostMapping("/image/menu/{name}")
+    public String postMenuImage(@RequestPart MultipartFile file, @PathVariable String name) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
+        return restaurantPostService.postRestaurantImage(file, name, RestaurantImage.MENU);
     }
 }
