@@ -34,13 +34,14 @@ public class CustomerService {
         Path path = Path.of(directory.getPath() + "/" + imageName + file.getContentType().replace("image/", "."));
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-        return path.toString().substring(8);
+        return "OK";
     }
 
     public String getCustomerImage(String name) throws ParamEmptyException {
         if(name.isEmpty()) throw new ParamEmptyException();
         File directory = new File(Directory.customerParent + name);
         if(!directory.exists()) return Directory.defaultImage;
-        return directory.list()[0];
+
+        return (directory.getPath() + "/" + directory.list()[0]).substring(7);
     }
 }

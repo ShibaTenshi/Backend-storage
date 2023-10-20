@@ -4,5 +4,5 @@ public class Directory {
     public static String restaurantParent= "storage/restaurant/";
     public static String customerParent= "storage/customer/";
     public static String parent = "storage/";
-    public static String defaultImage = "storage/default.png";
+    public static String defaultImage = "/default.png";
 }

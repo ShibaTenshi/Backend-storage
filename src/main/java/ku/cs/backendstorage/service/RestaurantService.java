@@ -38,7 +38,7 @@ public class RestaurantService {
         Path path = Path.of(directory.getPath() + "/" + imageName + file.getContentType().replace("image/", "."));
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-        return path.toString().substring(8);
+        return "OK";
     }
 
     public String getLogoImage(String name) throws ParamEmptyException {
@@ -47,10 +47,7 @@ public class RestaurantService {
         if(!directory.exists()) return Directory.defaultImage;
 
         Optional<String> logo = Arrays.stream(directory.list()).filter(string -> string.startsWith("logo")).findFirst();
-        if(logo.isPresent()) {
-            return logo.get();
-        }
-        return Directory.defaultImage;
+        return logo.map(string -> (directory.getPath() + "/" + string).substring(7)).orElseGet(() -> Directory.defaultImage);
     }
 
     public List<String> getEnvImage(String name) throws ParamEmptyException {
@@ -58,8 +55,9 @@ public class RestaurantService {
         File directory = new File(Directory.restaurantParent + name);
         if(!directory.exists()) return Collections.singletonList(Directory.defaultImage);
 
-        List<String> envs = Arrays.stream(directory.list()).filter(string -> string.startsWith("env")).toList();
+        List<String> envs = new ArrayList<>(Arrays.stream(directory.list()).filter(string -> string.startsWith("env")).toList());
         if(envs.isEmpty()) return Collections.singletonList(Directory.defaultImage);
+        envs.replaceAll(string -> (directory.getPath() + "/" + string).substring(7));
         return envs;
     }
 
@@ -68,8 +66,9 @@ public class RestaurantService {
         File directory = new File(Directory.restaurantParent + name);
         if(!directory.exists()) return Collections.singletonList(Directory.defaultImage);
 
-        List<String> menus = Arrays.stream(directory.list()).filter(string -> string.startsWith("menu")).toList();
+        List<String> menus = new ArrayList<>(Arrays.stream(directory.list()).filter(string -> string.startsWith("menu")).toList());
         if(menus.isEmpty()) return Collections.singletonList(Directory.defaultImage);
+        menus.replaceAll(string -> (directory.getPath() + "/" + string).substring(7));
         return menus;
     }
 }
