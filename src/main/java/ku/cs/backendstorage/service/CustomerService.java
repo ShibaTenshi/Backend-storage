@@ -4,7 +4,6 @@ import ku.cs.backendstorage.common.Directory;
 import ku.cs.backendstorage.exception.FileEmptyException;
 import ku.cs.backendstorage.exception.ImageFormatException;
 import ku.cs.backendstorage.exception.ParamEmptyException;
-import ku.cs.backendstorage.exception.UserNotfoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,9 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
