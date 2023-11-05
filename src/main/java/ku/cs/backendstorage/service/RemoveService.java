@@ -3,9 +3,9 @@ package ku.cs.backendstorage.service;
 import ku.cs.backendstorage.common.Directory;
 import ku.cs.backendstorage.exception.ParamEmptyException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
+import java.nio.file.Files;
 
 @Service
 public class RemoveService {
@@ -15,6 +15,19 @@ public class RemoveService {
         if (name.isEmpty()) throw new ParamEmptyException();
         String newPath = Directory.parent + type + "/" + name;
         System.out.println("Delete " + newPath);
-        FileSystemUtils.deleteRecursively(new File(newPath));
+        deleteDir(new File(newPath));
+
+    }
+
+    private void deleteDir(File file) {
+        File[] contents = file.listFiles();
+        if (contents != null) {
+            for (File f : contents) {
+                if (! Files.isSymbolicLink(f.toPath())) {
+                    deleteDir(f);
+                }
+            }
+        }
+        file.delete();
     }
 }
