@@ -24,7 +24,7 @@ public class CustomerController {
     }
 
     @GetMapping("/image/profile/{name}")
-    public String profileImage(@PathVariable String name) throws ParamEmptyException, UserNotfoundException {
+    public String profileImage(@PathVariable String name) throws ParamEmptyException {
         return customerService.getCustomerImage(name);
     }
 }

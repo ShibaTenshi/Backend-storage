@@ -18,11 +18,11 @@ import java.util.*;
 @Service
 public class RestaurantService {
 
-    public String postRestaurantImage(MultipartFile file, String restaurantName, RestaurantImage image) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
-        if (restaurantName.isEmpty()) throw new ParamEmptyException();
+    public String postRestaurantImage(MultipartFile file, String username, RestaurantImage image) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
+        if (username.isEmpty()) throw new ParamEmptyException();
         if (file.isEmpty()) throw new FileEmptyException();
         if (!file.getContentType().contains("image")) throw new ImageFormatException();
-        File directory = new File(Directory.restaurantParent + restaurantName);
+        File directory = new File(Directory.restaurantParent + username);
         directory.mkdirs();
 
         String imageName;
