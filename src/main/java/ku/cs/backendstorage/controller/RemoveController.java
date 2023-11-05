@@ -11,8 +11,9 @@ public class RemoveController {
     @Autowired
     RemoveService removeService;
 
-    @DeleteMapping("/{type}")
-    public void removeAll(@PathVariable String type, @RequestBody String name) throws ParamEmptyException {
+    @GetMapping("/{type}/{name}")
+    public String removeAll(@PathVariable String type, @PathVariable String name) throws ParamEmptyException {
         removeService.remove(type, name);
+        return "";
     }
 }
