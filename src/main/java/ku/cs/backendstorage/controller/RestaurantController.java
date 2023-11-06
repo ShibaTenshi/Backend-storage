@@ -20,7 +20,7 @@ public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
 
-    @PostMapping("/image/env")
+    @PostMapping("/image/env/{name}")
     public String envImage(@RequestPart MultipartFile file, @PathVariable String name) throws IOException, FileEmptyException, ImageFormatException, ParamEmptyException {
         return restaurantService.postRestaurantImage(file, name, RestaurantImage.ENV);
     }
